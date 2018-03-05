@@ -13,6 +13,8 @@ class webserverHander(BaseHTTPRequestHandler):
 				self.wfile.write(output)
 				print output
 				return
+		except IOError:
+			self.send_error(404, "File not found %s" % self.path)
 
 def main():
 	try:
