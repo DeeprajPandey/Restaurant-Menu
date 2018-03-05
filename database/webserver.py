@@ -10,6 +10,9 @@ class webserverHander(BaseHTTPRequestHandler):
 
 				output=""
 				output+="<html><body>Hello!</body></html>"
+				self.wfile.write(output)
+				print output
+				return
 
 def main():
 	try:
