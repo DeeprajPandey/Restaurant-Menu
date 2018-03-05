@@ -10,7 +10,9 @@ class webserverHandler(BaseHTTPRequestHandler):
 				self.end_headers()
 
 				output=""
-				output+="<html><body>Hello!</body></html>"
+				output+="<html><body>Hello!"
+				output += '''<form method='POST' enctype='multipart/form-data' action='/hello'><h2>What would you like me to say?</h2><input name="message" type="text" ><input type="submit" value="Submit"> </form>'''
+				output+="</body></html>"
 				self.wfile.write(output)
 				print output
 				return
@@ -20,7 +22,9 @@ class webserverHandler(BaseHTTPRequestHandler):
 				self.end_headers()
 
 				output=""
-				output+="<html><body>&#161Hola!<a href='/hello'>Back to hello</a></body></html>"
+				output+="<html><body>&#161Hola!<a href='/hello'>Back to hello</a>"
+				output += '''<form method='POST' enctype='multipart/form-data' action='/hello'><h2>What would you like me to say?</h2><input name="message" type="text" ><input type="submit" value="Submit"> </form>'''
+				output+="</body></html>"
 				self.wfile.write(output)
 				print output
 				return
@@ -37,9 +41,16 @@ class webserverHandler(BaseHTTPRequestHandler):
 				messageContent = fields.get('message')
 
 			output=""
-			ouput+="<html><body></body></html>"
+			ouput+="<html><body>"
+			output+="<h2>Okay, how about this:</h2>"
+			output+="<h1>%s</h1>" % messageContent[0]
+			output += '''<form method='POST' enctype='multipart/form-data' action='/hello'><h2>What would you like me to say?</h2><input name="message" type="text" ><input type="submit" value="Submit"> </form>'''
+			output+="</body></html>"
+			self.wfile.write(output)
+			print output
 
 		except:
+			pass
 
 def main():
 	try:
