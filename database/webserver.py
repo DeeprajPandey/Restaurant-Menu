@@ -1,5 +1,16 @@
 from BaseHTTPServer import BaseHTTPRequestHandler, BaseHTTPServer
 
+class webserverHander(BaseHTTPRequestHandler):
+	def do_GET(self):
+		try:
+			if self.path.endswith("/hello"):
+				self.send_response(200)
+				self.send_header('Content type', 'text/html')
+				self.end_headers()
+
+				output=""
+				output+="<html><body>Hello!</body></html>"
+
 def main():
 	try:
 		port = 8080
