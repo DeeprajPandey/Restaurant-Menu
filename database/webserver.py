@@ -11,6 +11,7 @@ class webserverHandler(self):
 			output += "<html><body>Hello!</body></html>"
 			self.wfile.write(output)
 			print output
+			return
 
 	except IOError:
 		self.send_error(404, "Requested file not found at %s" % self.path)
