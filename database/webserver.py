@@ -1,5 +1,11 @@
 from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 
+class webserverHandler(self):
+	try:
+
+	except IOError:
+		self.send_error(404, "Requested file not found at %s" % self.path)
+
 def main():
 	try:
 		port = 8080
