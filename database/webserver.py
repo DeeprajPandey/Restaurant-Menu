@@ -31,7 +31,13 @@ class webserverHandler(BaseHTTPRequestHandler):
 			self.send_response(301)
 			self.end_headers()
 
-			
+			ctype, pdict = cgi.parse_header(self.headers.getheader('content type'))
+			if ctype == 'multipart/form-data':
+				fields = cgi.parse_multipart(self.rfile, pdict)
+				messageContent = fields.get('message')
+
+			output=""
+			ouput+="<html><body></body></html>"
 
 		except:
 
