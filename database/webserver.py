@@ -93,6 +93,23 @@ class webServerHandler(BaseHTTPRequestHandler):
 				self.send_header('Content-type', 'text/html')
 				self.send_header('Location', '/restaurants')
 				self.end_headers()
+			if self.path.endswith("/edit"):
+				restaurantIdPath = self.path.split("/")[2]
+				requestedRestaurant = session.query(Restaurant).filetr_by(id = restaurantIdPath).one()
+
+				ctype, pdict = cgi.parse_header(
+					self.headers.getheader('Content-type'))
+				if ctype == 'multipart/form-data':
+					fields = cgi.parse_multipart(self.rfile, pdict)
+					inputText = fields.get('restaurantName')
+				requestedRestaurant.name = inputText[0]
+				session.add(requestedRestaurant)
+				session.commit()
+
+				self.send_response(301)
+				self.send_header('Content-type', 'text/html')
+				self.send_header('Location', '/restaurants')
+				self.end_headers()
 
 		except:
 			pass
