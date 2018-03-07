@@ -63,23 +63,23 @@ class webServerHandler(BaseHTTPRequestHandler):
             self.send_error(404, 'File Not Found: %s' % self.path)
 
     def do_POST(self):
-        try:
-	            ctype, pdict = cgi.parse_header(
-	                self.headers.getheader('content-type'))
-	            if ctype == 'multipart/form-data':
-	                fields = cgi.parse_multipart(self.rfile, pdict)
-	                inputText = fields.get('restaurantName')
-	            newRestaurant = Restaurant(name=newRestaurant[0])
-	            session.add(newRestaurant)
-	            session.commit()
+		try:
+			ctype, pdict = cgi.parse_header(
+				self.headers.getheader('content-type'))
+			if ctype == 'multipart/form-data':
+				fields = cgi.parse_multipart(self.rfile, pdict)
+				inputText = fields.get('restaurantName')
+			newRestaurant = Restaurant(name=newRestaurant[0])
+			session.add(newRestaurant)
+			session.commit()
 
-	            self.send_response(301)
-	            self.send_header('Content-type', 'text/html')
-	            self.send_header('Location', '/restaurants')
-	            self.end_headers()
+			self.send_response(301)
+			self.send_header('Content-type', 'text/html')
+			self.send_header('Location', '/restaurants')
+			self.end_headers()
 
-        except:
-            pass
+		except:
+			pass
 
 
 def main():
