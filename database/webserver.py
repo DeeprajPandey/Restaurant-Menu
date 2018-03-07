@@ -5,6 +5,11 @@ from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Restaurant, MenuItem
 
 engine = create_engine('sql:///restaurantmenu.db')
+# Bind the engine to metadata of Base so declaratives can be accessed through DBSession
+Base.metadata.bind = engine
+
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 class webServerHandler(BaseHTTPRequestHandler):
 
