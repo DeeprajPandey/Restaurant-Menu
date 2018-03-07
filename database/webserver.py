@@ -119,7 +119,7 @@ class webServerHandler(BaseHTTPRequestHandler):
 					inputText = fields.get('restaurantName')
 					restaurantIdPath = self.path.split("/")[2]
 				requestedRestaurant = session.query(Restaurant).filter_by(id = restaurantIdPath).one()
-				if requestedRestaurant != []
+				if requestedRestaurant != []:
 					requestedRestaurant.name = inputText[0]
 					session.add(requestedRestaurant)
 					session.commit()
