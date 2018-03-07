@@ -4,12 +4,14 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Restaurant, MenuItem
 
-engine = create_engine('sql:///restaurantmenu.db')
+engine = create_engine('sqlite:///restaurantmenu.db')
 # Bind the engine to metadata of Base so declaratives can be accessed through DBSession
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+# To read names
+allRestaurants = session.query(Restaurant).all()
 
 class webServerHandler(BaseHTTPRequestHandler):
 
@@ -32,8 +34,6 @@ class webServerHandler(BaseHTTPRequestHandler):
             	self.send_response(200)
             	self.send_header('Content-type', 'text/html')
             	self.end_headers()
-            	# To read names
-				allRestaurants = session.query(Restaurant).all()
             	output=""
             	output+="<html><body>"
             	output+="<h2> %s </h2>" % allRestaurants.name
