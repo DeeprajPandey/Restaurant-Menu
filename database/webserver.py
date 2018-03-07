@@ -84,6 +84,8 @@ class webServerHandler(BaseHTTPRequestHandler):
 					output=""
 					output+="<html><body>"
 					output+="<h1>Are you sure you want to delete %s ?</h1>" % requestedRestaurant.name
+					output+="<form method='POST' enctype='multipart/form-data' action='/restaurants/%s/delete'>" % restaurantIdPath
+					output+="<input type='submit' value='Delete'></form>"
 					output+="</body></html>"
 					self.wfile.write(output)
 					return
@@ -127,6 +129,21 @@ class webServerHandler(BaseHTTPRequestHandler):
 				self.send_header('Location', '/restaurants')
 				self.end_headers()
 				return
+
+			if self.path.endswith("/delete"):
+				ctype, pdict = cgi.parse_header(
+					self.headers.getheader('Content-type'))
+				restaurantIdPath = self.path.split("/")[2]
+				requestedRestaurant = session.query(Restaurant).filter_by(id = restaurantIdPath).one()
+				if requestedRestaurant != []
+					session.delete(requestedRestaurant)
+					session.commit()
+					self.send_response(301)
+					self.send_header('Content-type', 'text/html')
+					self.send_header('Location', '/restaurants')
+					self.end_headers()
+
+return
 
 		except:
 			pass
