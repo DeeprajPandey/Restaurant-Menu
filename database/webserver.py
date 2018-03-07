@@ -142,8 +142,7 @@ class webServerHandler(BaseHTTPRequestHandler):
 					self.send_header('Content-type', 'text/html')
 					self.send_header('Location', '/restaurants')
 					self.end_headers()
-
-return
+					return
 
 		except:
 			pass
