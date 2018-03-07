@@ -41,7 +41,7 @@ class webServerHandler(BaseHTTPRequestHandler):
 				for restaurant in allRestaurants:
 					output+="<div><h3> %s </h3>" % restaurant.name
 					output+="<a href='/restaurants/%s/edit'>Edit</a>" % restaurant.id
-					output+="&emsp;<a href='/delete'>Delete</a></div><br/><br/>"
+					output+="&emsp;<a href='/restaurants/%s/delete'>Delete</a></div><br/><br/>" % restaurant.id
 				output+="</body></html>"
 				self.wfile.write(output)
 				print output
@@ -69,7 +69,7 @@ class webServerHandler(BaseHTTPRequestHandler):
 					output+="<html><body>"
 					output+="<h1> %s </h1>" % requestedRestaurant.name
 					output+="<form method='POST' enctype='multipart/form-data' action='/restaurants/%s/edit'>" % restaurantIdPath
-					output+="<input name='newRestaurantName' type='text' placeholder='%s'><input type='submit' value='Rename'></form>" % requestedRestaurant.name
+					output+="<input name='restaurantName' type='text' placeholder='%s'><input type='submit' value='Rename'></form>" % requestedRestaurant.name
 					output+="</body></html>"
 					self.wfile.write(output)
 					return
@@ -100,7 +100,7 @@ class webServerHandler(BaseHTTPRequestHandler):
 					self.headers.getheader('Content-type'))
 				if ctype == 'multipart/form-data':
 					fields = cgi.parse_multipart(self.rfile, pdict)
-					inputText = fields.get('newRestaurantName')
+					inputText = fields.get('restaurantName')
 					restaurantIdPath = self.path.split("/")[2]
 				requestedRestaurant = session.query(Restaurant).filter_by(id = restaurantIdPath).one()
 				if requestedRestaurant != []
