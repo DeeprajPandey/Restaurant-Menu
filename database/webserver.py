@@ -11,10 +11,6 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-# To read names
-allRestaurants = session.query(Restaurant).all()
-allRestaurants.name
-
 class webServerHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
@@ -36,6 +32,15 @@ class webServerHandler(BaseHTTPRequestHandler):
             	self.send_response(200)
             	self.send_header('Content-type', 'text/html')
             	self.end_headers()
+            	# To read names
+				allRestaurants = session.query(Restaurant).all()
+            	output=""
+            	output+="<html><body>"
+            	output+="<h2> %s </h2>" % allRestaurants.name
+            	output+="</body></html>"
+            	self.wfile.write(output)
+            	print output
+            	return
 
         except IOError:
             self.send_error(404, 'File Not Found: %s' % self.path)
