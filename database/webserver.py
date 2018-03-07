@@ -39,7 +39,7 @@ class webServerHandler(BaseHTTPRequestHandler):
             	output+="<h1>List of Restaurants</h1>"
             	output+="<a href='/restaurants/new'><h2>Make a New Restaurant Here</h2></a>"
             	for restaurant in allRestaurants:
-            		output+="<div><h2> %s </h2>" % restaurant.name
+            		output+="<div><h3> %s </h3>" % restaurant.name
             		output+="<a href='/edit'>Edit</a>"
             		output+="&emsp;<a href='/delete'>Delete</a></div><br/><br/>"
             	output+="</body></html>"
@@ -52,8 +52,8 @@ class webServerHandler(BaseHTTPRequestHandler):
             	self.end_headers()
             	output=""
             	output+="<html><body>"
-            	output+='''<form method='POST' enctype='multipart/form-data' action='/new'><input name='newRestaurant' type='text'><input type='submit' value='Submit'></form>'''
             	output+="<h1>Make a New Restaurant</h1><br/>"
+            	output+='''<form method='POST' enctype='multipart/form-data' action='/new'><input name='restaurantName' type='text'><input type='submit' value='Submit'></form>'''
             	output+="</html></body>"
             	self.wfile.write(output)
             	print output
@@ -71,15 +71,10 @@ class webServerHandler(BaseHTTPRequestHandler):
                 self.headers.getheader('content-type'))
             if ctype == 'multipart/form-data':
                 fields = cgi.parse_multipart(self.rfile, pdict)
-                messagecontent = fields.get('message')
-            output = ""
-            output += "<html><body>"
-            output += " <h2> Okay, how about this: </h2>"
-            output += "<h1> %s </h1>" % messagecontent[0]
-            output += '''<form method='POST' enctype='multipart/form-data' action='/hello'><h2>What would you like me to say?</h2><input name="message" type="text" ><input type="submit" value="Submit"> </form>'''
-            output += "</body></html>"
-            self.wfile.write(output)
-            print output
+                newRestaurant = fields.get('restaurantName')
+            session.add(Restaurant(name="%s")) % newRestaurant[0]
+            session.commit()
+
         except:
             pass
 
