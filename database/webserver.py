@@ -61,17 +61,18 @@ class webServerHandler(BaseHTTPRequestHandler):
 			if self.path.endswith("/edit"):
 				restaurantIdPath = self.path.split("/")[2]
 				requestedRestaurant = session.query(Restaurant).filter_by(id=RestaurantIdPath).one()
-				self.send_response(200)
-				self.send_header('Content-type', 'text/html')
-				self.end_headers()
-				output=""
-				output+="<html><body>"
-				output+="<h1>Edit the Restaurant Name</h1><br/>"
-				output+='''<form method='POST' enctype='multipart/form-data' placeholder='Edit Restaurant Name'><input name='restaurantName' type='text'><input type='submit' value='Submit'></form>'''
-				output+="</html></body>"
-				self.wfile.write(output)
-				print output
-				return
+				if requestedRestaurant != []:
+					self.send_response(200)
+					self.send_header('Content-type', 'text/html')
+					self.end_headers()
+					output=""
+					output+="<html><body>"
+					output+="<h1> %s </h1>" % requestedRestaurant.name
+					output+='''<form method='POST' enctype='multipart/form-data' action='/retaurants/%s/edit' ''' % requestedRestaurant.id
+					output+='''placeholder='%s'><input name='restaurantName' type='text'><input type='submit' value='Rename'></form>''' % requestedRestaurant.name
+					output+="</body></html>"
+					self.wfile.write(output)
+					return
 
 		except IOError:
 			self.send_error(404, 'File Not Found: %s' % self.path)
