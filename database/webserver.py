@@ -11,6 +11,10 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+# To read names
+allRestaurants = session.query(Restaurant).all()
+allRestaurants.name
+
 class webServerHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
