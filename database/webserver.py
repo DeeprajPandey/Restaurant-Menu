@@ -68,7 +68,7 @@ class webServerHandler(BaseHTTPRequestHandler):
 					output=""
 					output+="<html><body>"
 					output+="<h1> %s </h1>" % requestedRestaurant.name
-					output+='''<form method='POST' enctype='multipart/form-data' action='/retaurants/%s/edit' ''' % requestedRestaurant.id
+					output+='''<form method='POST' enctype='multipart/form-data' action='/restaurants/%s/edit' ''' % requestedRestaurant.id
 					output+='''placeholder='%s'><input name='restaurantName' type='text'><input type='submit' value='Rename'></form>''' % requestedRestaurant.name
 					output+="</body></html>"
 					self.wfile.write(output)
