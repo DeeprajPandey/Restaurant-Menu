@@ -12,10 +12,10 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 @app.route('/')
-@app.route('/hello')
-def HelloWorld():
-	restaurant = session.query(Restaurant).first()
-	items = session.query(MenuItem).filter_by(restaurant_id=restaurant.id)
+@app.route('/restaurants/<int:restaurant_id>/')
+def restaurantMenu(restaurant_id):
+	restaurant = session.query(Restaurant).filter_by(id=restaurant_id)
+	items = session.query(MenuItem).filter_by(restaurant_id=restaurant_id)
 	output=''
 	for i in items:
 		output+=i.name
