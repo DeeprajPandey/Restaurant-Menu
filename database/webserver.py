@@ -4,6 +4,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Restaurant, MenuItem
 
+engine = create_engine('sql:///restaurantmenu.db')
+
 class webServerHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
