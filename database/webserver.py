@@ -135,7 +135,7 @@ class webServerHandler(BaseHTTPRequestHandler):
 					self.headers.getheader('Content-type'))
 				restaurantIdPath = self.path.split("/")[2]
 				requestedRestaurant = session.query(Restaurant).filter_by(id = restaurantIdPath).one()
-				if requestedRestaurant != []
+				if requestedRestaurant != []:
 					session.delete(requestedRestaurant)
 					session.commit()
 					self.send_response(301)
