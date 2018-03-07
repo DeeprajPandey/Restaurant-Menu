@@ -53,7 +53,7 @@ class webServerHandler(BaseHTTPRequestHandler):
             	output=""
             	output+="<html><body>"
             	output+="<h1>Make a New Restaurant</h1><br/>"
-            	output+='''<form method='POST' enctype='multipart/form-data' placeholder='New Restaurant Name'><input name='restaurantName' type='text'><input type='submit' value='Submit'></form>'''
+            	output+='''<form method='POST' enctype='multipart/form-data' action='/restaurants' placeholder='New Restaurant Name'><input name='restaurantName' type='text'><input type='submit' value='Submit'></form>'''
             	output+="</html></body>"
             	self.wfile.write(output)
             	print output
@@ -63,13 +63,12 @@ class webServerHandler(BaseHTTPRequestHandler):
             self.send_error(404, 'File Not Found: %s' % self.path)
 
     def do_POST(self):
-		try:
-			ctype, pdict = cgi.parse_header(
+        ctype, pdict = cgi.parse_header(
 				self.headers.getheader('content-type'))
 			if ctype == 'multipart/form-data':
 				fields = cgi.parse_multipart(self.rfile, pdict)
 				inputText = fields.get('restaurantName')
-			newRestaurant = Restaurant(name=newRestaurant[0])
+			newRestaurant = Restaurant(name=inputText[0])
 			session.add(newRestaurant)
 			session.commit()
 
