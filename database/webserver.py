@@ -37,8 +37,9 @@ class webServerHandler(BaseHTTPRequestHandler):
             	output=""
             	output+="<html><body>"
             	for restaurant in allRestaurants:
-            		output+=restaurant.name
-            		output+="<br/>"
+            		output+="<div><h2> %s </h2>" % restaurant.name
+            		output+="<a href='/edit'>Edit</a>"
+            		output+="&emsp;<a href='/delete'>Delete</a></div><br/><br/>"
             	output+="</body></html>"
             	self.wfile.write(output)
             	print output
