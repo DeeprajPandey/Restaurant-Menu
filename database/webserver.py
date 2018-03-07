@@ -63,7 +63,8 @@ class webServerHandler(BaseHTTPRequestHandler):
             self.send_error(404, 'File Not Found: %s' % self.path)
 
     def do_POST(self):
-        ctype, pdict = cgi.parse_header(
+    	if self.path.endswith("/restaurants/new")
+	        ctype, pdict = cgi.parse_header(
 				self.headers.getheader('content-type'))
 			if ctype == 'multipart/form-data':
 				fields = cgi.parse_multipart(self.rfile, pdict)
