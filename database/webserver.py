@@ -60,7 +60,7 @@ class webServerHandler(BaseHTTPRequestHandler):
 				return
 			if self.path.endswith("/edit"):
 				restaurantIdPath = self.path.split("/")[2]
-				requestedRestaurant = session.query(Restaurant).filter_by(id=RestaurantIdPath).one()
+				requestedRestaurant = session.query(Restaurant).filter_by(id=restaurantIdPath).one()
 				if requestedRestaurant != []:
 					self.send_response(200)
 					self.send_header('Content-type', 'text/html')
