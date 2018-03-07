@@ -40,7 +40,7 @@ class webServerHandler(BaseHTTPRequestHandler):
 				output+="<a href='/restaurants/new'><h2>Make a New Restaurant Here</h2></a>"
 				for restaurant in allRestaurants:
 					output+="<div><h3> %s </h3>" % restaurant.name
-					output+="<a href='/restaurants%s/edit'>Edit</a>" % restaurant.id
+					output+="<a href='/restaurants/%s/edit'>Edit</a>" % restaurant.id
 					output+="&emsp;<a href='/delete'>Delete</a></div><br/><br/>"
 				output+="</body></html>"
 				self.wfile.write(output)
@@ -93,6 +93,8 @@ class webServerHandler(BaseHTTPRequestHandler):
 				self.send_header('Content-type', 'text/html')
 				self.send_header('Location', '/restaurants')
 				self.end_headers()
+				return
+
 			if self.path.endswith("/edit"):
 				restaurantIdPath = self.path.split("/")[2]
 				requestedRestaurant = session.query(Restaurant).filetr_by(id = restaurantIdPath).one()
@@ -110,6 +112,7 @@ class webServerHandler(BaseHTTPRequestHandler):
 				self.send_header('Content-type', 'text/html')
 				self.send_header('Location', '/restaurants')
 				self.end_headers()
+				return
 
 		except:
 			pass
