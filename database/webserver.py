@@ -74,6 +74,20 @@ class webServerHandler(BaseHTTPRequestHandler):
 					self.wfile.write(output)
 					return
 
+			if self.path.endswith("/delete"):
+				restaurantIdPath = self.path.split("/")[2]
+				requestedRestaurant = session.query(Restaurant).filter_by(id=restaurantIdPath).one()
+				if requestedRestaurant != []:
+					self.send_response(200)
+					self.send_header('Content-type', 'text/html')
+					self.end_headers()
+					output=""
+					output+="<html><body>"
+					output+="<h1>Are you sure you want to delete %s ?</h1>" % requestedRestaurant.name
+					output+="</body></html>"
+					self.wfile.write(output)
+					return
+
 		except IOError:
 			self.send_error(404, 'File Not Found: %s' % self.path)
 
