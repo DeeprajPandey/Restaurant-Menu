@@ -72,7 +72,7 @@ class webServerHandler(BaseHTTPRequestHandler):
             if ctype == 'multipart/form-data':
                 fields = cgi.parse_multipart(self.rfile, pdict)
                 newRestaurant = fields.get('restaurantName')
-            session.add(Restaurant(name="%s")) % newRestaurant[0]
+            session.add(Restaurant(name=newRestaurant[0]))
             session.commit()
 
         except:
