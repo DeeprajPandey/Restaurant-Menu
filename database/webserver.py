@@ -10,8 +10,6 @@ Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
-# To read names
-allRestaurants = session.query(Restaurant).all()
 
 class webServerHandler(BaseHTTPRequestHandler):
 
@@ -31,12 +29,16 @@ class webServerHandler(BaseHTTPRequestHandler):
                 return
 
             if self.path.endswith("/restaurants"):
+            	# To read names
+            	allRestaurants = session.query(Restaurant).all()
             	self.send_response(200)
             	self.send_header('Content-type', 'text/html')
             	self.end_headers()
             	output=""
             	output+="<html><body>"
-            	output+="<h2> %s </h2>" % allRestaurants.name
+            	for restaurant in allRestaurants:
+            		output+=restaurant.name
+            		output+="<br/>"
             	output+="</body></html>"
             	self.wfile.write(output)
             	print output
