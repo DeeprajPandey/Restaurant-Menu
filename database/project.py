@@ -29,6 +29,7 @@ def restaurantMenu(restaurant_id):
 @app.route('/restaurants/<int:restaurant_id>/new')
 def newMenuItem(restaurant_id):
 	restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+	return "Working!"
 
 @app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/edit')
 def editMenuItem(restaurant_id, menu_id):
