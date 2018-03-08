@@ -18,7 +18,7 @@ def restaurantMenu(restaurant_id):
 	items = session.query(MenuItem).filter_by(restaurant_id=restaurant.id)
 	return render_template('menu.html', restaurant=restaurant, items=items)
 
-@app.route('/restaurants/<int:restaurant_id>/new')
+@app.route('/restaurants/<int:restaurant_id>/new', methods=['GET','POST'])
 def newMenuItem(restaurant_id):
 	restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
 	return "Working!"
