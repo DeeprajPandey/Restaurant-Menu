@@ -36,6 +36,9 @@ def editMenuItem(restaurant_id, menu_id):
 	item = session.query(MenuItem).filter_by(id=menu_id).one()
 
 @app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/delete')
+def deleteMenuItem(restaurant_id, menu_id):
+	restaurant = session.query(Restaurant).filter_by(od=restaurant_id).one()
+	item = session.query(MenuItem).filter_by(id=menu_id).one()
 
 if __name__ == '__main__':
 	app.debug = True
