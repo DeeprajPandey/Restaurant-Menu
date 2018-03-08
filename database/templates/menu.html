@@ -1,6 +1,7 @@
 <html>
 	<body>
 		<h1>{{restaurant.name}}</h1>
+		<a href='{{ url_for('newMenuItem', restaurant_id=restaurant.id) }}'>Add new menu item</a>
 		{% for i in items %}
 		<div>
 			<p>{{i.name}}</p>
@@ -11,6 +12,5 @@
 			<br/><br/>
 		</div>
 		{% endfor %}
-		<a href='{{ url_for('newMenuItem', restaurant_id=restaurant.id) }}'>Add new menu item</a>
 	</body>
 </html>
