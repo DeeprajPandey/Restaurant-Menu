@@ -27,11 +27,13 @@ def newMenuItem(restaurant_id):
 def editMenuItem(restaurant_id, menu_id):
 	restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
 	item = session.query(MenuItem).filter_by(id=menu_id).one()
+	return "Edit Working!"
 
 @app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/delete')
 def deleteMenuItem(restaurant_id, menu_id):
-	restaurant = session.query(Restaurant).filter_by(od=restaurant_id).one()
+	restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
 	item = session.query(MenuItem).filter_by(id=menu_id).one()
+	return "Delete Working!"
 
 if __name__ == '__main__':
 	app.debug = True
